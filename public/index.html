@@ -7,295 +7,104 @@
   <link rel="icon" href="https://cdn.imgchest.com/files/00feb4d9ce79.png">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
     :root {
       --bg-black: #060a07;
-      --bg-surface: #0e1711;
-      --bg-card: #14221a;
-      --bg-input: #1a2b21;
-      --border-green: #1d3b2a;
+      --bg-surface: #0c140e;
+      --bg-card: #121e16;
+      --bg-input: #17281e;
+      --border-green: #1d3827;
       --neon-green: #00e676;
-      --dark-green: #00a854;
-      --bubble-sent: #007038;
+      --dark-green: #008744;
+      --bubble-sent: #006030;
       --text-white: #ffffff;
-      --text-muted: #8b9e93;
+      --text-muted: #83978b;
       --danger: #ef4444;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-black); color: var(--text-white); height: 100vh; display: flex; justify-content: center; overflow: hidden; }
 
-    /* মোবাইল স্ক্রিন কন্টেইনার */
     .app-viewport {
-      width: 100%;
-      max-width: 480px;
-      height: 100vh;
-      background: var(--bg-surface);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 50px rgba(0, 230, 118, 0.1);
+      width: 100%; max-width: 480px; height: 100vh; background: var(--bg-surface);
+      display: flex; flex-direction: column; position: relative; overflow: hidden;
+      box-shadow: 0 0 50px rgba(0, 230, 118, 0.15);
     }
 
-    .screen {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      display: none;
-      flex-direction: column;
-      background: var(--bg-surface);
-      z-index: 10;
-      overflow-y: auto;
-    }
+    .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--bg-surface); z-index: 10; overflow-y: auto; }
     .screen.active { display: flex; }
 
     /* ১. স্প্ল্যাশ স্ক্রিন */
-    #screen-splash {
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 30px;
-      background: radial-gradient(circle at center, #0f2e1e 0%, var(--bg-black) 75%);
-    }
-    .splash-logo { width: 130px; height: 130px; margin-bottom: 24px; filter: drop-shadow(0 0 25px rgba(0,230,118,0.4)); }
-    .brand-title { font-size: 32px; font-weight: 800; letter-spacing: 1px; color: var(--text-white); }
+    #screen-splash { justify-content: center; align-items: center; text-align: center; padding: 30px; background: radial-gradient(circle at center, #0e291b 0%, var(--bg-black) 78%); }
+    .splash-logo { width: 135px; height: 135px; margin-bottom: 25px; filter: drop-shadow(0 0 25px rgba(0,230,118,0.45)); }
+    .brand-title { font-size: 34px; font-weight: 800; letter-spacing: 1.5px; }
     .brand-tagline { font-size: 13px; color: var(--neon-green); margin-top: 6px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+    
     .btn-primary {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--neon-green), var(--dark-green));
-      color: #031409;
-      border: none;
-      border-radius: 28px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 230, 118, 0.35);
-      margin-top: 40px;
-      transition: transform 0.2s;
+      width: 100%; padding: 16px; background: linear-gradient(135deg, var(--neon-green), var(--dark-green));
+      color: #02160a; border: none; border-radius: 28px; font-size: 16px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 230, 118, 0.35); margin-top: 35px; transition: transform 0.2s;
     }
     .btn-primary:active { transform: scale(0.98); }
 
-    /* অথেন্টিকেশন স্ক্রিনসমূহ */
-    .auth-container { padding: 35px 25px; flex: 1; display: flex; flex-direction: column; }
-    .auth-header { margin-bottom: 30px; }
+    /* ফর্মস ও অথেন্টিকেশন */
+    .auth-container { padding: 30px 24px; flex: 1; display: flex; flex-direction: column; }
     .auth-header h2 { font-size: 26px; font-weight: 700; margin-top: 15px; }
     .auth-header p { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
-    .input-group { margin-bottom: 18px; }
-    .input-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 7px; }
     .input-box {
-      width: 100%;
-      padding: 15px 18px;
-      background: var(--bg-input);
-      border: 1px solid var(--border-green);
-      border-radius: 14px;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
+      width: 100%; padding: 15px; background: var(--bg-input); border: 1px solid var(--border-green);
+      border-radius: 14px; color: #fff; font-size: 15px; outline: none;
     }
     .input-box:focus { border-color: var(--neon-green); }
 
     .google-btn {
-      width: 100%;
-      padding: 14px;
-      background: #17281e;
-      border: 1px solid var(--border-green);
-      color: #fff;
-      border-radius: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-
-    /* ওটিপি বক্স */
-    .otp-inputs { display: flex; justify-content: space-between; gap: 8px; margin: 25px 0; }
-    .otp-digit {
-      width: 48px; height: 55px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: 700;
-      border-radius: 12px;
-      background: var(--bg-input);
-      border: 1px solid var(--border-green);
-      color: var(--neon-green);
-      outline: none;
+      width: 100%; padding: 14px; background: #17281e; border: 1px solid var(--border-green);
+      color: #fff; border-radius: 28px; display: flex; align-items: center; justify-content: center;
+      gap: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 15px;
     }
 
     /* অ্যাপ হেডার */
-    .app-header {
-      padding: 16px 20px;
-      background: var(--bg-surface);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-green);
-    }
-    .app-header .logo-group { display: flex; align-items: center; gap: 10px; }
-    .app-header img { width: 34px; height: 34px; }
-    .app-header h3 { font-size: 19px; font-weight: 800; color: var(--text-white); }
-
-    /* সার্চ ও ট্যাব */
-    .search-bar { padding: 12px 20px; }
-    .search-inner {
-      background: var(--bg-input);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      padding: 10px 16px;
-      gap: 10px;
-    }
-    .search-inner input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
-    .nav-tabs { display: flex; padding: 0 20px; gap: 15px; margin-bottom: 10px; }
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      background: var(--bg-input);
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--text-muted);
-    }
-    .tab-btn.active { background: var(--neon-green); color: #021a0c; }
+    .app-header { padding: 16px 20px; background: var(--bg-surface); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-green); }
+    .logo-group { display: flex; align-items: center; gap: 10px; }
+    .logo-group img { width: 34px; height: 34px; }
+    .logo-group h3 { font-size: 19px; font-weight: 800; }
 
     /* চ্যাট লিস্ট */
-    .chat-list { flex: 1; overflow-y: auto; padding: 0 15px; }
-    .chat-item {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      border-radius: 16px;
-      gap: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+    .chat-list { flex: 1; overflow-y: auto; padding: 10px 15px; }
+    .chat-item { display: flex; align-items: center; padding: 14px; border-radius: 16px; gap: 14px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .chat-item:active { background: var(--bg-card); }
     .avatar-wrapper { position: relative; width: 50px; height: 50px; }
     .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-    .online-badge {
-      width: 12px; height: 12px;
-      background: var(--neon-green);
-      border: 2px solid var(--bg-surface);
-      border-radius: 50%;
-      position: absolute;
-      bottom: 0; right: 0;
-    }
+    .online-badge { width: 12px; height: 12px; background: var(--neon-green); border: 2px solid var(--bg-surface); border-radius: 50%; position: absolute; bottom: 0; right: 0; }
     .chat-info { flex: 1; }
     .chat-info-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
     .user-name { font-weight: 600; font-size: 15px; }
-    .msg-time { font-size: 11px; color: var(--text-muted); }
-    .last-msg { font-size: 13px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
+    .last-msg { font-size: 13px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 210px; }
 
     /* চ্যাট উইন্ডো */
-    .chat-topbar {
-      padding: 12px 18px;
-      background: var(--bg-card);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border-bottom: 1px solid var(--border-green);
-    }
-    .messages-area {
-      flex: 1;
-      padding: 20px 16px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: radial-gradient(circle at top, #09170e 0%, var(--bg-black) 100%);
-    }
-    .bubble {
-      max-width: 78%;
-      padding: 10px 14px;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.4;
-      position: relative;
-    }
-    .bubble.sent {
-      align-self: flex-end;
-      background: var(--bubble-sent);
-      color: #fff;
-      border-bottom-right-radius: 4px;
-    }
-    .bubble.received {
-      align-self: flex-start;
-      background: var(--bg-card);
-      border: 1px solid var(--border-green);
-      color: #e5e7eb;
-      border-bottom-left-radius: 4px;
-    }
+    .chat-topbar { padding: 12px 18px; background: var(--bg-card); display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--border-green); }
+    .messages-area { flex: 1; padding: 20px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: radial-gradient(circle at top, #09170f 0%, var(--bg-black) 100%); }
+    .bubble { max-width: 78%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.4; position: relative; word-break: break-word; }
+    .bubble.sent { align-self: flex-end; background: var(--bubble-sent); color: #fff; border-bottom-right-radius: 4px; }
+    .bubble.received { align-self: flex-start; background: var(--bg-card); border: 1px solid var(--border-green); color: #e5e7eb; border-bottom-left-radius: 4px; }
+    .bubble .bubble-sender { font-size: 11px; font-weight: 700; color: var(--neon-green); margin-bottom: 3px; }
     .bubble .bubble-time { font-size: 10px; color: rgba(255,255,255,0.6); text-align: right; margin-top: 4px; }
-    .bubble img, .bubble video { max-width: 100%; border-radius: 10px; margin-top: 4px; }
+    .bubble img { max-width: 100%; border-radius: 10px; margin-top: 6px; }
 
     /* ইনপুট বার */
-    .chat-bottombar {
-      padding: 12px 16px;
-      background: var(--bg-surface);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-top: 1px solid var(--border-green);
-    }
-    .chat-input {
-      flex: 1;
-      padding: 12px 16px;
-      background: var(--bg-input);
-      border: 1px solid var(--border-green);
-      border-radius: 25px;
-      color: #fff;
-      outline: none;
-      font-size: 14px;
-    }
-    .action-btn {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      cursor: pointer;
-    }
+    .chat-bottombar { padding: 12px 16px; background: var(--bg-surface); display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--border-green); }
+    .chat-input { flex: 1; padding: 12px 16px; background: var(--bg-input); border: 1px solid var(--border-green); border-radius: 25px; color: #fff; outline: none; font-size: 14px; }
+    .action-btn { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
     .send-btn { background: var(--neon-green); color: #021a0c; font-size: 16px; }
-    .attach-btn { background: transparent; color: var(--neon-green); font-size: 20px; }
 
     /* নিচের নেভিগেশন বার */
-    .bottom-nav {
-      height: 65px;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border-green);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
+    .bottom-nav { height: 65px; background: var(--bg-card); border-top: 1px solid var(--border-green); display: flex; justify-content: space-around; align-items: center; }
     .nav-icon-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); cursor: pointer; }
     .nav-icon-btn.active { color: var(--neon-green); }
     .nav-icon-btn span { font-size: 11px; font-weight: 600; }
-
-    /* মিডিয়া চয়েস মডাল */
-    .modal-sheet {
-      position: absolute;
-      bottom: 0; left: 0; width: 100%;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border-green);
-      border-radius: 24px 24px 0 0;
-      padding: 24px;
-      display: none;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      z-index: 50;
-    }
-    .modal-sheet.active { display: grid; }
-    .media-opt { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; }
-    .opt-icon { width: 52px; height: 52px; border-radius: 50%; background: var(--bg-input); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--neon-green); }
-    .media-opt span { font-size: 12px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -304,7 +113,7 @@
   
   <!-- ১. স্প্ল্যাশ স্ক্রিন -->
   <div id="screen-splash" class="screen active">
-    <img src="https://cdn.imgchest.com/files/00feb4d9ce79.png" alt="Prince Chat Logo" class="splash-logo">
+    <img src="https://cdn.imgchest.com/files/00feb4d9ce79.png" alt="Prince Chat" class="splash-logo">
     <h1 class="brand-title">PRINCE CHAT</h1>
     <p class="brand-tagline">Simple • Fast • Secure</p>
     <button class="btn-primary" onclick="showScreen('screen-login')">Get Started</button>
@@ -318,18 +127,27 @@
         <h2>Welcome Back</h2>
         <p>Login to your secure account</p>
       </div>
+
+      <button class="google-btn" onclick="loginWithGoogle()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18"> Continue with Google
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 10px; margin: 25px 0;">
+        <hr style="flex: 1; border: 0.5px solid var(--border-green);">
+        <span style="font-size: 12px; color: var(--text-muted);">OR WITH EMAIL</span>
+        <hr style="flex: 1; border: 0.5px solid var(--border-green);">
+      </div>
+
       <div class="input-group">
-        <label>Mobile Number</label>
-        <input type="tel" id="login-phone" class="input-box" placeholder="+880 1712 345678">
+        <label>Email Address</label>
+        <input type="email" id="login-email" class="input-box" placeholder="you@domain.com">
       </div>
       <div class="input-group">
         <label>Password</label>
         <input type="password" id="login-password" class="input-box" placeholder="••••••••">
       </div>
-      <button class="btn-primary" style="margin-top: 15px;" onclick="handleLogin()">Login</button>
-      <button class="google-btn" onclick="handleGoogleLogin()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18"> Continue with Google
-      </button>
+      <button class="btn-primary" style="margin-top: 10px;" onclick="loginWithEmail()">Login</button>
+      
       <p style="text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-muted);">
         Don't have an account? <span style="color: var(--neon-green); cursor: pointer;" onclick="showScreen('screen-register')">Register</span>
       </p>
@@ -342,125 +160,97 @@
       <div class="auth-header">
         <i class="fa-solid fa-arrow-left" style="font-size: 20px; cursor: pointer;" onclick="showScreen('screen-login')"></i>
         <h2>Create Account</h2>
-        <p>Enter your phone number to start</p>
+        <p>Join PRINCE CHAT today</p>
+      </div>
+      <button class="google-btn" onclick="loginWithGoogle()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18"> Continue with Google
+      </button>
+      <div class="input-group" style="margin-top: 20px;">
+        <label>Display Name</label>
+        <input type="text" id="reg-name" class="input-box" placeholder="Your Name">
       </div>
       <div class="input-group">
-        <label>Mobile Number</label>
-        <input type="tel" id="reg-phone" class="input-box" placeholder="+880 1712 345678">
+        <label>Email</label>
+        <input type="email" id="reg-email" class="input-box" placeholder="you@domain.com">
       </div>
       <div class="input-group">
         <label>Password</label>
-        <input type="password" id="reg-password" class="input-box" placeholder="••••••••">
+        <input type="password" id="reg-password" class="input-box" placeholder="At least 6 characters">
       </div>
-      <button class="btn-primary" style="margin-top: 15px;" onclick="handleRegister()">Register</button>
+      <button class="btn-primary" style="margin-top: 10px;" onclick="registerWithEmail()">Create Account</button>
       <p style="text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-muted);">
         Already have an account? <span style="color: var(--neon-green); cursor: pointer;" onclick="showScreen('screen-login')">Login</span>
       </p>
     </div>
   </div>
 
-  <!-- ৪. ওটিপি ভেরিফিকেশন স্ক্রিন -->
-  <div id="screen-otp" class="screen">
-    <div class="auth-container">
-      <div class="auth-header">
-        <i class="fa-solid fa-arrow-left" style="font-size: 20px; cursor: pointer;" onclick="showScreen('screen-register')"></i>
-        <h2>Verify OTP</h2>
-        <p id="otp-instruction">We sent a 6-digit code to your mobile</p>
-      </div>
-      <div class="otp-inputs">
-        <input type="text" maxlength="6" id="otp-input" class="input-box" style="text-align: center; font-size: 24px; letter-spacing: 8px; color: var(--neon-green);" placeholder="000000">
-      </div>
-      <button class="btn-primary" onclick="handleVerifyOtp()">Verify Code</button>
-    </div>
-  </div>
-
-  <!-- ৫. মেইন চ্যাট লিস্ট ও হোম স্ক্রিন -->
+  <!-- ৪. মেইন চ্যাট লিস্ট -->
   <div id="screen-main" class="screen">
     <div class="app-header">
       <div class="logo-group">
         <img src="https://cdn.imgchest.com/files/00feb4d9ce79.png">
         <h3>PRINCE CHAT</h3>
       </div>
-      <i class="fa-solid fa-crown" style="color: var(--neon-green); font-size: 18px;"></i>
-    </div>
-
-    <div class="search-bar">
-      <div class="search-inner">
-        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
-        <input type="text" id="contact-search" placeholder="Search friends or mobile..." onkeyup="searchUsers(this.value)">
-      </div>
-    </div>
-
-    <div class="nav-tabs">
-      <div class="tab-btn active" id="tab-chats" onclick="switchTab('chats')">Chats</div>
-      <div class="tab-btn" id="tab-contacts" onclick="switchTab('contacts')">Contacts</div>
+      <i class="fa-solid fa-crown" style="color: var(--neon-green); font-size: 20px;"></i>
     </div>
 
     <div class="chat-list" id="chat-list-container">
-      <!-- চ্যাটসমূহ জাভাস্ক্রিপ্ট দ্বারা যুক্ত হবে -->
+      <!-- রয়্যাল গ্লোবাল রুম -->
+      <div class="chat-item" onclick="openChat('global', '👑 Prince Royal Lounge')">
+        <div class="avatar-wrapper">
+          <img src="https://cdn.imgchest.com/files/00feb4d9ce79.png" class="avatar-img">
+          <div class="online-badge"></div>
+        </div>
+        <div class="chat-info">
+          <div class="chat-info-top">
+            <span class="user-name" style="color: var(--neon-green);">👑 Prince Royal Lounge</span>
+            <span class="last-msg" style="font-size: 11px;">Live Cloud</span>
+          </div>
+          <div class="last-msg" id="global-last-preview">Tap to enter the live chat...</div>
+        </div>
+      </div>
+      <div id="users-list-area"></div>
     </div>
 
     <div class="bottom-nav">
-      <div class="nav-icon-btn active" onclick="switchTab('chats')">
+      <div class="nav-icon-btn active">
         <i class="fa-solid fa-message"></i>
         <span>Chats</span>
       </div>
-      <div class="nav-icon-btn" onclick="switchTab('contacts')">
-        <i class="fa-solid fa-users"></i>
-        <span>Contacts</span>
-      </div>
       <div class="nav-icon-btn" onclick="showScreen('screen-profile')">
-        <i class="fa-solid fa-gear"></i>
-        <span>Settings</span>
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+      </div>
+      <div class="nav-icon-btn" onclick="handleLogout()">
+        <i class="fa-solid fa-arrow-right-from-bracket" style="color: var(--danger);"></i>
+        <span>Logout</span>
       </div>
     </div>
   </div>
 
-  <!-- ৬. ইন্ডিভিজুয়াল চ্যাট উইন্ডো -->
+  <!-- ৫. চ্যাট উইন্ডো -->
   <div id="screen-chat" class="screen">
     <div class="chat-topbar">
       <i class="fa-solid fa-arrow-left" style="font-size: 18px; cursor: pointer;" onclick="showScreen('screen-main')"></i>
       <div class="avatar-wrapper" style="width: 40px; height: 40px;">
-        <img id="chat-user-avatar" src="https://cdn.imgchest.com/files/00feb4d9ce79.png" class="avatar-img">
-        <div id="chat-user-online" class="online-badge"></div>
+        <img id="chat-room-avatar" src="https://cdn.imgchest.com/files/00feb4d9ce79.png" class="avatar-img">
+        <div class="online-badge"></div>
       </div>
       <div style="flex: 1;">
-        <div id="chat-user-name" style="font-weight: 700; font-size: 15px;">User</div>
-        <div id="chat-user-status" style="font-size: 11px; color: var(--neon-green);">Online</div>
+        <div id="chat-room-title" style="font-weight: 700; font-size: 15px;">Chat</div>
+        <div style="font-size: 11px; color: var(--neon-green);">● Cloud Synced Active</div>
       </div>
     </div>
 
     <div class="messages-area" id="messages-container"></div>
 
     <div class="chat-bottombar">
-      <button class="action-btn attach-btn" onclick="toggleMediaModal()"><i class="fa-solid fa-paperclip"></i></button>
-      <input type="file" id="media-file-input" style="display: none;" onchange="handleFileUpload(event)">
-      <input type="text" id="msg-input" class="chat-input" placeholder="Type a message..." onkeypress="handleEnterMsg(event)">
-      <button class="action-btn send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-
-    <!-- মিডিয়া শেয়ারিং ড্রয়ার -->
-    <div class="modal-sheet" id="media-modal">
-      <div class="media-opt" onclick="triggerFileInput('image/*')">
-        <div class="opt-icon"><i class="fa-solid fa-image"></i></div>
-        <span>Gallery</span>
-      </div>
-      <div class="media-opt" onclick="triggerFileInput('video/*')">
-        <div class="opt-icon"><i class="fa-solid fa-video"></i></div>
-        <span>Video</span>
-      </div>
-      <div class="media-opt" onclick="triggerFileInput('*/*')">
-        <div class="opt-icon"><i class="fa-solid fa-file"></i></div>
-        <span>Files</span>
-      </div>
-      <div class="media-opt" onclick="toggleMediaModal()">
-        <div class="opt-icon" style="color: var(--danger);"><i class="fa-solid fa-xmark"></i></div>
-        <span>Close</span>
-      </div>
+      <input type="text" id="msg-input" class="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendCloudMessage()">
+      <button class="action-btn send-btn" onclick="sendCloudMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
-  <!-- ৭. প্রোফাইল ও সেটিংস স্ক্রিন -->
+  <!-- ৬. প্রোফাইল স্ক্রিন -->
   <div id="screen-profile" class="screen">
     <div class="auth-container">
       <div class="auth-header">
@@ -468,313 +258,202 @@
         <h2>My Profile</h2>
       </div>
       <div style="text-align: center; margin: 20px 0;">
-        <img id="my-avatar" src="https://cdn.imgchest.com/files/00feb4d9ce79.png" style="width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--neon-green);">
-        <p style="font-size: 13px; color: var(--neon-green); margin-top: 8px; cursor: pointer;" onclick="alert('ছবি আপলোড অপশন')">Change Photo</p>
+        <img id="profile-pic" src="https://cdn.imgchest.com/files/00feb4d9ce79.png" style="width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--neon-green);">
+        <h3 id="profile-display-name" style="margin-top: 10px;">User</h3>
+        <p id="profile-email" style="font-size: 13px; color: var(--text-muted);"></p>
       </div>
-      <div class="input-group">
-        <label>Display Name</label>
-        <input type="text" id="profile-name" class="input-box">
-      </div>
-      <div class="input-group">
-        <label>About Status</label>
-        <input type="text" id="profile-about" class="input-box">
-      </div>
-      <button class="btn-primary" onclick="updateProfile()">Save Changes</button>
-      <button class="google-btn" style="color: var(--danger); border-color: var(--danger); margin-top: 30px;" onclick="logout()">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-      </button>
+      <button class="btn-primary" onclick="showScreen('screen-main')">Back to Chats</button>
+      <button class="google-btn" style="color: var(--danger); border-color: var(--danger); margin-top: 25px;" onclick="handleLogout()">Logout</button>
     </div>
   </div>
 
 </div>
 
-<!-- সকেট ক্লায়েন্ট স্ক্রিপ্ট -->
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  let socket = null;
+<!-- Firebase SDKs (Official CDN) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { 
+    getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut 
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { 
+    getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, 
+    doc, setDoc, getDocs 
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // আপনার আসল ফায়ারবেস কনফিগ
+  const firebaseConfig = {
+    apiKey: "AIzaSyD-zDTlA6m-7MoqlHbe2eZjdsWavFDEHv4",
+    authDomain: "prince-chat-ca16d.firebaseapp.com",
+    projectId: "prince-chat-ca16d",
+    storageBucket: "prince-chat-ca16d.firebasestorage.app",
+    messagingSenderId: "306760711173",
+    appId: "1:306760711173:web:830322750b44c0e4a5306c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
   let currentUser = null;
-  let currentConvoId = null;
-  let currentTargetUser = null;
-  let tempPhone = '';
+  let activeRoom = 'global';
+  let unsubscribeMessages = null;
 
-  function showScreen(screenId) {
+  window.showScreen = function(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-  }
+    document.getElementById(id).classList.add('active');
+  };
 
-  // পেজ লোড চেক
-  window.onload = async () => {
-    try {
-      const res = await fetch('/api/auth/me');
-      const data = await res.json();
-      if (data.success && data.user) {
-        setupUser(data.user);
-      } else {
-        showScreen('screen-splash');
-      }
-    } catch (e) {
+  // অথেন্টিকেশন স্টেট পরিবর্তন ট্র্যাকার
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      document.getElementById('profile-display-name').innerText = user.displayName || 'Prince User';
+      document.getElementById('profile-email').innerText = user.email || '';
+      if (user.photoURL) document.getElementById('profile-pic').src = user.photoURL;
+
+      // ক্লাউড ডাটাবেসে ইউজার সেভ
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: user.displayName || 'Prince User',
+        email: user.email,
+        photo: user.photoURL || 'https://cdn.imgchest.com/files/00feb4d9ce79.png',
+        lastSeen: serverTimestamp()
+      }, { merge: true });
+
+      loadRegisteredUsers();
+      showScreen('screen-main');
+    } else {
+      currentUser = null;
       showScreen('screen-splash');
+    }
+  });
+
+  // ১. আসল Google লগইন
+  window.loginWithGoogle = async function() {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      alert("Google Login Error: " + err.message);
     }
   };
 
-  function setupUser(user) {
-    currentUser = user;
-    document.getElementById('my-avatar').src = user.avatar;
-    document.getElementById('profile-name').value = user.displayName;
-    document.getElementById('profile-about').value = user.about;
-    
-    // সকেট কানেক্ট
-    socket = io();
-    socket.emit('user_connected', currentUser._id);
-    
-    socket.on('receive_message', (msg) => {
-      if (currentConvoId && msg.conversationId === currentConvoId) {
-        renderBubble(msg);
-      }
-      loadConversations();
-    });
-
-    loadConversations();
-    showScreen('screen-main');
-  }
-
-  async function handleRegister() {
-    const phone = document.getElementById('reg-phone').value;
+  // ২. ইমেইল রেজিস্ট্রেশন
+  window.registerWithEmail = async function() {
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
-    if (!phone || !password) return alert('ফোন নম্বর ও পাসওয়ার্ড পূরণ করুন');
+    if (!name || !email || !password) return alert("সবগুলো তথ্য পূরণ করুন");
 
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, password })
-    });
-    const data = await res.json();
-    if (data.success) {
-      tempPhone = phone;
-      document.getElementById('otp-instruction').innerText = `OTP sent to ${phone} (Demo OTP: ${data.devOtp})`;
-      showScreen('screen-otp');
-    } else {
-      alert(data.message);
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+    } catch (err) {
+      alert("Error: " + err.message);
     }
-  }
+  };
 
-  async function handleVerifyOtp() {
-    const otp = document.getElementById('otp-input').value;
-    const res = await fetch('/api/auth/verify-otp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: tempPhone, otp })
-    });
-    const data = await res.json();
-    if (data.success) {
-      setupUser(data.user);
-    } else {
-      alert(data.message);
-    }
-  }
-
-  async function handleLogin() {
-    const phone = document.getElementById('login-phone').value;
+  // ৩. ইমেইল লগইন
+  window.loginWithEmail = async function() {
+    const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone, password })
-    });
-    const data = await res.json();
-    if (data.success) {
-      setupUser(data.user);
-    } else {
-      alert(data.message);
+    if (!email || !password) return alert("ইমেইল ও পাসওয়ার্ড দিন");
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      alert("Error: " + err.message);
     }
-  }
+  };
 
-  async function handleGoogleLogin() {
-    // গুগল ডেমো অনবোর্ডিং
-    const mockId = 'google_' + Date.now();
-    const res = await fetch('/api/auth/google', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        googleId: mockId,
-        email: 'user@gmail.com',
-        name: 'Prince Google User',
-        avatar: 'https://cdn.imgchest.com/files/00feb4d9ce79.png'
-      })
-    });
-    const data = await res.json();
-    if (data.success) setupUser(data.user);
-  }
+  // ৪. লগআউট
+  window.handleLogout = async function() {
+    await signOut(auth);
+    location.reload();
+  };
 
-  async function loadConversations() {
-    const res = await fetch('/api/chats');
-    const data = await res.json();
-    const container = document.getElementById('chat-list-container');
+  // ৫. রেজিস্টার্ড ইউজার তালিকা লোড
+  async function loadRegisteredUsers() {
+    const usersSnap = await getDocs(collection(db, "users"));
+    const container = document.getElementById('users-list-area');
     container.innerHTML = '';
 
-    if (!data.conversations || data.conversations.length === 0) {
-      container.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 30px;">কোনো চ্যাট নেই। Contacts ট্যাব থেকে ফ্রেন্ড খুঁজুন!</p>`;
-      return;
-    }
+    usersSnap.forEach(d => {
+      const u = d.data();
+      if (u.uid === currentUser.uid) return;
 
-    data.conversations.forEach(c => {
-      const otherUser = c.participants.find(p => p._id !== currentUser._id) || {};
       const item = document.createElement('div');
       item.className = 'chat-item';
-      item.onclick = () => openChat(c._id, otherUser);
+      item.onclick = () => openChat(u.uid, u.name, u.photo);
       item.innerHTML = `
         <div class="avatar-wrapper">
-          <img src="${otherUser.avatar || 'https://cdn.imgchest.com/files/00feb4d9ce79.png'}" class="avatar-img">
-          ${otherUser.online ? '<div class="online-badge"></div>' : ''}
+          <img src="${u.photo || 'https://cdn.imgchest.com/files/00feb4d9ce79.png'}" class="avatar-img">
+          <div class="online-badge"></div>
         </div>
         <div class="chat-info">
           <div class="chat-info-top">
-            <span class="user-name">${otherUser.displayName || 'User'}</span>
-            <span class="msg-time">${new Date(c.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+            <span class="user-name">${u.name}</span>
           </div>
-          <div class="last-msg">${c.lastMessage ? (c.lastMessage.text || '📎 মিডিয়া ফাইল') : 'চ্যাট শুরু করুন'}</div>
+          <div class="last-msg">${u.email}</div>
         </div>
       `;
       container.appendChild(item);
     });
   }
 
-  async function searchUsers(q) {
-    if (!q) return loadConversations();
-    const res = await fetch(`/api/users/search?q=${q}`);
-    const data = await res.json();
-    const container = document.getElementById('chat-list-container');
-    container.innerHTML = '';
-    
-    data.users.forEach(u => {
-      const item = document.createElement('div');
-      item.className = 'chat-item';
-      item.onclick = async () => {
-        const startRes = await fetch('/api/chats/start', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ targetUserId: u._id })
-        });
-        const startData = await startRes.json();
-        openChat(startData.conversation._id, u);
-      };
-      item.innerHTML = `
-        <div class="avatar-wrapper">
-          <img src="${u.avatar}" class="avatar-img">
-        </div>
-        <div class="chat-info">
-          <div class="user-name">${u.displayName}</div>
-          <div class="last-msg">${u.phone || 'Prince Member'}</div>
-        </div>
-      `;
-      container.appendChild(item);
-    });
-  }
-
-  async function openChat(convoId, targetUser) {
-    currentConvoId = convoId;
-    currentTargetUser = targetUser;
-    
-    document.getElementById('chat-user-name').innerText = targetUser.displayName;
-    document.getElementById('chat-user-avatar').src = targetUser.avatar || 'https://cdn.imgchest.com/files/00feb4d9ce79.png';
-    document.getElementById('chat-user-status').innerText = targetUser.online ? 'Online' : 'Offline';
-    
-    socket.emit('join_chat', convoId);
+  // ৬. চ্যাট ওপেন করা
+  window.openChat = function(roomId, roomTitle, avatar) {
+    activeRoom = roomId;
+    document.getElementById('chat-room-title').innerText = roomTitle;
+    if (avatar) document.getElementById('chat-room-avatar').src = avatar;
     showScreen('screen-chat');
 
-    const res = await fetch(`/api/chats/${convoId}/messages`);
-    const data = await res.json();
     const msgBox = document.getElementById('messages-container');
     msgBox.innerHTML = '';
-    data.messages.forEach(renderBubble);
-  }
 
-  function renderBubble(msg) {
-    const msgBox = document.getElementById('messages-container');
-    const isSent = msg.sender._id === currentUser._id || msg.sender === currentUser._id;
-    const bubble = document.createElement('div');
-    bubble.className = `bubble ${isSent ? 'sent' : 'received'}`;
-    
-    let content = `<div>${msg.text}</div>`;
-    if (msg.type === 'image') content += `<img src="${msg.fileUrl}">`;
-    if (msg.type === 'video') content += `<video controls src="${msg.fileUrl}"></video>`;
-    if (msg.type === 'file') content += `<a href="${msg.fileUrl}" target="_blank" style="color: var(--neon-green);">📄 ${msg.fileName}</a>`;
-    
-    content += `<div class="bubble-time">${new Date(msg.createdAt || Date.now()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>`;
-    bubble.innerHTML = content;
-    msgBox.appendChild(bubble);
-    msgBox.scrollTop = msgBox.scrollHeight;
-  }
+    if (unsubscribeMessages) unsubscribeMessages();
 
-  function sendMessage() {
-    const text = document.getElementById('msg-input').value.trim();
-    if (!text || !currentConvoId) return;
-
-    socket.emit('send_message', {
-      conversationId: currentConvoId,
-      senderId: currentUser._id,
-      text,
-      type: 'text'
-    });
-    document.getElementById('msg-input').value = '';
-  }
-
-  function handleEnterMsg(e) { if (e.key === 'Enter') sendMessage(); }
-  function toggleMediaModal() { document.getElementById('media-modal').classList.toggle('active'); }
-  function triggerFileInput(accept) {
-    const input = document.getElementById('media-file-input');
-    input.accept = accept;
-    input.click();
-    toggleMediaModal();
-  }
-
-  async function handleFileUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const res = await fetch('/api/upload', { method: 'POST', body: formData });
-    const data = await res.json();
-    if (data.success) {
-      socket.emit('send_message', {
-        conversationId: currentConvoId,
-        senderId: currentUser._id,
-        text: '',
-        type: data.type,
-        fileUrl: data.fileUrl,
-        fileName: data.fileName,
-        fileSize: data.fileSize
+    // ক্লাউড থেকে রিয়েল-টাইম মেসেজ লাইভ লিসেনার
+    const q = query(collection(db, "messages_" + roomId), orderBy("createdAt", "asc"));
+    unsubscribeMessages = onSnapshot(q, (snapshot) => {
+      msgBox.innerHTML = '';
+      snapshot.forEach(docSnap => {
+        const m = docSnap.data();
+        const isMe = m.senderId === currentUser.uid;
+        const b = document.createElement('div');
+        b.className = `bubble ${isMe ? 'sent' : 'received'}`;
+        b.innerHTML = `
+          ${!isMe ? `<div class="bubble-sender">${m.senderName}</div>` : ''}
+          <div>${m.text}</div>
+          <div class="bubble-time">${m.time || ''}</div>
+        `;
+        msgBox.appendChild(b);
       });
-    }
-  }
-
-  async function updateProfile() {
-    const displayName = document.getElementById('profile-name').value;
-    const about = document.getElementById('profile-about').value;
-    const res = await fetch('/api/users/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ displayName, about })
+      msgBox.scrollTop = msgBox.scrollHeight;
     });
-    const data = await res.json();
-    if (data.success) {
-      alert('প্রোফাইল আপডেট হয়েছে!');
-      currentUser = data.user;
-    }
-  }
+  };
 
-  async function logout() {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    location.reload();
-  }
+  // ৭. ক্লাউড ডাটাবেসে মেসেজ পাঠানো
+  window.sendCloudMessage = async function() {
+    const input = document.getElementById('msg-input');
+    const text = input.value.trim();
+    if (!text || !currentUser) return;
+    input.value = '';
 
-  function switchTab(tab) {
-    document.getElementById('tab-chats').classList.toggle('active', tab === 'chats');
-    document.getElementById('tab-contacts').classList.toggle('active', tab === 'contacts');
-    if (tab === 'contacts') searchUsers('');
-    else loadConversations();
-  }
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    await addDoc(collection(db, "messages_" + activeRoom), {
+      text: text,
+      senderId: currentUser.uid,
+      senderName: currentUser.displayName || 'Prince User',
+      senderAvatar: currentUser.photoURL || 'https://cdn.imgchest.com/files/00feb4d9ce79.png',
+      time: timeStr,
+      createdAt: serverTimestamp()
+    });
+  };
 </script>
+
 </body>
 </html>
